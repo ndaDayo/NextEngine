@@ -66,7 +66,7 @@ $nextEngine = new NextEngine($client, $accessToken);
 #### 商品マスタを取得
 
 ```
-$fields = [
+$field = [
     'goods_id',
     'goods_representation_id',
     'goods_name',
