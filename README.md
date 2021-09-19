@@ -25,7 +25,7 @@ $client = new Client();
 $clientId = 'client-id';
 $clientSecret = 'client-secret';
 
-$nextEngineToken = new NextEngineToken($client, $id, $secret);
+$nextEngineToken = new NextEngineToken($client, $clientId, $clientSecret);
 ```
 
 #### 認証画面のURLを取得
