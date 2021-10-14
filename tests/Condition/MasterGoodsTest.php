@@ -4,11 +4,39 @@ declare(strict_types=1);
 
 namespace NdaDayo\NextEngine\Condition;
 
+use NdaDayo\NextEngine\Condition\Criteria\MasterGoodsCriteria;
 use NdaDayo\NextEngine\Condition\Fields\MasterGoodsFields;
 use PHPUnit\Framework\TestCase;
 
 class MasterGoodsTest extends TestCase
 {
+    public function testCriteria(): void
+    {
+        $criteria = [
+            [
+                'field' => 'goods_id',
+                'operator' => '-eq',
+                'parameter' => 1,
+            ],
+            [
+                'field' => 'goods_representation_id',
+                'operator' => '-eq',
+                'parameter' => 2,
+            ],
+        ];
+
+        $criteria = new MasterGoodsCriteria($criteria);
+        $masterGoods = new MasterGoods();
+        $masterGoods->criteria($criteria);
+
+        $expected = [
+            'goods_id-eq' => 1,
+            'goods_representation_id-eq' => 2,
+        ];
+
+        $this->assertEquals($expected, $masterGoods->payload());
+    }
+
     public function testFields(): void
     {
         $masterGoodsFields = [

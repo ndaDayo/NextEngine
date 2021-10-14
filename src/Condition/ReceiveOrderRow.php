@@ -4,14 +4,24 @@ declare(strict_types=1);
 
 namespace NdaDayo\NextEngine\Condition;
 
+use NdaDayo\NextEngine\Condition\Criteria\ReceiveOrderRowCriteria;
 use NdaDayo\NextEngine\Condition\Fields\ReceiveOrderRowFields;
 
 final class ReceiveOrderRow extends AbstractCondition
 {
+    /** @var array<string, mixed> $criteria */
+    protected array $criteria;
     protected string $fields;
     protected int $wait_flag;
     protected int $offset;
     protected int $limit;
+
+    public function criteria(ReceiveOrderRowCriteria $criteria): ReceiveOrderRow
+    {
+        $this->criteria = $criteria->payload();
+
+        return $this;
+    }
 
     public function fields(ReceiveOrderRowFields $fields): ReceiveOrderRow
     {
