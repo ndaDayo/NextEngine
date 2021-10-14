@@ -4,11 +4,39 @@ declare(strict_types=1);
 
 namespace NdaDayo\NextEngine\Condition;
 
+use NdaDayo\NextEngine\Condition\Criteria\ReceiveOrderBaseCriteria;
 use NdaDayo\NextEngine\Condition\Fields\ReceiveOrderBaseFields;
 use PHPUnit\Framework\TestCase;
 
 class ReceiveOrderBaseTest extends TestCase
 {
+    public function testCriteria(): void
+    {
+        $criteria = [
+            [
+                'field' => 'receive_order_shop_id',
+                'operator' => '-eq',
+                'parameter' => 1,
+            ],
+            [
+                'field' => 'receive_order_id',
+                'operator' => '-eq',
+                'parameter' => 2,
+            ],
+        ];
+
+        $criteria = new ReceiveOrderBaseCriteria($criteria);
+        $receiveOrderBase = new ReceiveOrderBase();
+        $receiveOrderBase->criteria($criteria);
+
+        $expected = [
+            'receive_order_shop_id-eq' => 1,
+            'receive_order_id-eq' => 2,
+        ];
+
+        $this->assertEquals($expected, $receiveOrderBase->payload());
+    }
+
     public function testFields(): void
     {
         $receiveOrderBaseFields = [

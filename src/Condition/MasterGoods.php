@@ -4,14 +4,24 @@ declare(strict_types=1);
 
 namespace NdaDayo\NextEngine\Condition;
 
+use NdaDayo\NextEngine\Condition\Criteria\MasterGoodsCriteria;
 use NdaDayo\NextEngine\Condition\Fields\MasterGoodsFields;
 
 final class MasterGoods extends AbstractCondition
 {
+    /** @var array<string, mixed> $criteria */
+    protected array $criteria;
     protected string $fields;
     protected int $wait_flag;
     protected int $offset;
     protected int $limit;
+
+    public function criteria(MasterGoodsCriteria $criteria): MasterGoods
+    {
+        $this->criteria = $criteria->payload();
+
+        return $this;
+    }
 
     public function fields(MasterGoodsFields $fields): MasterGoods
     {
