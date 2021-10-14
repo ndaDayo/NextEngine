@@ -19,19 +19,17 @@ use function array_merge;
 class NextEngine implements NextEngineInterface
 {
     public function __construct(
-        private ClientInterface $client,
-        private string $accessToken,
-        private ?string $refreshToken = null,
+        private ClientInterface $client
     ) {
     }
 
-    public function __invoke(ConditionInterface $condition): ResponseInterface
+    public function __invoke(ConditionInterface $condition, string $accessToken, ?string $refreshToken = null): ResponseInterface
     {
         try {
             $response = $this->client->request(
                 $condition->method(),
                 'https://api.next-engine.org' . $condition,
-                $this->requestOptions($condition)
+                $this->requestOptions($condition, $accessToken, $refreshToken)
             );
 
             return new Response($response);
@@ -43,24 +41,24 @@ class NextEngine implements NextEngineInterface
     /**
      * @return array<string, array<string, string>>
      */
-    private function requestOptions(ConditionInterface $condition): array
+    private function requestOptions(ConditionInterface $condition, string $accessToken, ?string $refreshToken = null): array
     {
         return [
             RequestOptions::HEADERS => [RequestHeader::CONTENT_TYPE => MediaType::APPLICATION_FORM_URLENCODED],
-            RequestOptions::FORM_PARAMS => $this->formParams($condition),
+            RequestOptions::FORM_PARAMS => $this->formParams($condition, $accessToken, $refreshToken),
         ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    private function formParams(ConditionInterface $condition): array
+    private function formParams(ConditionInterface $condition, string $accessToken, ?string $refreshToken = null): array
     {
-        $params = array_merge(['access_token' => $this->accessToken], $condition->payload());
-        if ($this->refreshToken === null) {
+        $params = array_merge(['access_token' => $accessToken], $condition->payload());
+        if ($refreshToken === null) {
             return $params;
         }
 
-        return array_merge($params, ['refresh_token' => $this->refreshToken]);
+        return array_merge($params, ['refresh_token' => $refreshToken]);
     }
 }

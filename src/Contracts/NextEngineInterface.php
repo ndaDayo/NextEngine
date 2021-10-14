@@ -6,5 +6,5 @@ namespace NdaDayo\NextEngine\Contracts;
 
 interface NextEngineInterface
 {
-    public function __invoke(ConditionInterface $condition): ResponseInterface;
+    public function __invoke(ConditionInterface $condition, string $accessToken, ?string $refreshToken = null): ResponseInterface;
 }

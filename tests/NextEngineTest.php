@@ -52,7 +52,7 @@ class NextEngineTest extends TestCase
                 return $this->response;
             });
 
-        $response = (new NextEngine($client, $accessToken, $refreshToken))($this->condition);
+        $response = (new NextEngine($client))($this->condition, $accessToken, $refreshToken);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals($this->expected(), $response->body());
@@ -78,7 +78,7 @@ class NextEngineTest extends TestCase
                 return $this->response;
             });
 
-        $response = (new NextEngine($client, $accessToken, $refreshToken))($this->condition);
+        $response = (new NextEngine($client))($this->condition, $accessToken, $refreshToken);
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertSame($this->expected(), $response->body());
     }
@@ -95,7 +95,7 @@ class NextEngineTest extends TestCase
 
         $client->shouldReceive('request')->andThrow('Exception');
 
-        (new NextEngine($client, $accessToken, $refreshToken))($this->condition);
+        (new NextEngine($client))($this->condition, $accessToken, $refreshToken);
     }
 
     private function expectedUrl(): string
