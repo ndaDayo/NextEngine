@@ -1,6 +1,6 @@
 # NextEngine Api Client
 
-[![Packagist](https://img.shields.io/badge/packagist-v1.0-blue.svg)](https://packagist.org/packages/ndaDayo/nextengine)
+[![Packagist](https://img.shields.io/badge/packagist-v2.0-blue.svg)](https://packagist.org/packages/ndaDayo/nextengine)
 [![CI](https://github.com/ndaDayo/nextengine/actions/workflows/ci.yml/badge.svg)](https://github.com/ndaDayo/nextengine/actions/workflows/ci.yml)
 
 NextEngineのAPIを利用するためのライブラリです。
