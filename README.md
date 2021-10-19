@@ -1,6 +1,6 @@
 # NextEngine Api Client
 
-[![Packagist](https://img.shields.io/badge/packagist-v2.0-blue.svg)](https://packagist.org/packages/ndaDayo/nextengine)
+[![Packagist](https://img.shields.io/badge/packagist-v2.1.0-blue.svg)](https://packagist.org/packages/ndaDayo/nextengine)
 [![CI](https://github.com/ndaDayo/nextengine/actions/workflows/ci.yml/badge.svg)](https://github.com/ndaDayo/nextengine/actions/workflows/ci.yml)
 
 NextEngineのAPIを利用するためのライブラリです。
@@ -63,7 +63,7 @@ $accessToken = 'access-token';
 $nextEngine = new NextEngine($client, $accessToken);
 ```
 
-#### 商品マスタを取得
+#### 商品マスタ
 
 ```
 $field = [
@@ -72,15 +72,24 @@ $field = [
     'goods_name',
 ];
 
-$fields = new MasterGoodsFields($field);
-$masterGoods = new MasterGoods();
-$masterGoods->fields($fields);
+$criteria = [
+    [
+        'field' => 'goods_id',
+        'operator' => '-eq',
+        'parameter' => 'goods_idを設定',
+    ],
+];
 
-$response = $nextEngine($MasterGoods);
+$fields = new MasterGoodsFields($field);
+$criteria = new MasterGoodsCriteria($criteria);
+$masterGoods = new MasterGoods();
+$masterGoods->fields($fields)->criteria($criteria);
+
+$response = $nextEngine($masterGoods, 'access_token');
 $response->body();
 ```
 
-#### 受注伝票を取得
+#### 受注伝票
 
 ```
 $field = [
@@ -89,14 +98,23 @@ $field = [
     'receive_order_shop_cut_form_id',
 ];
 
+$criteria = [
+    [
+        'field' => 'receive_order_id',
+        'operator' => '-eq',
+        'parameter' => 'receive_order_idを設定',
+    ],
+];
+
 $fields = new ReceiveOrderBaseFields($field);
+$criteria = new ReceiveOrderBaseCriteria($criteria);
 $receiveOrderBase = new ReceiveOrderBase();
-$receiveOrderBase->fields($fields);
-$response = $nextEngine($receiveOrderBase)
+$receiveOrderBase->fields($fields)->criteria($criteria);
+$response = $nextEngine($receiveOrderBase, 'access_token');
 $response->body();
 ```
 
-#### 受注明細を取得
+#### 受注明細
 
 ```
 $field = [
@@ -105,11 +123,69 @@ $field = [
     'receive_order_row_no',
 ];
 
-$fields = new ReceiveOrderRowFields($field);
-$receiveOrderRow = new ReceiveOrderRow();
-$receiveOrderRow->fields($fields);
+$criteria = [
+    [
+        'field' => 'receive_order_id',
+        'operator' => '-eq',
+        'parameter' => 'receive_order_idを設定',
+    ],
+];
 
-$response = $nextEngine($receiveOrderRow);
+$fields = new ReceiveOrderRowFields($field);
+$criteria = new ReceiveOrderRowCriteria($criteria);
+$receiveOrderRow = new ReceiveOrderRow();
+$receiveOrderRow->fields($fields)->criteria($criteria);
+$response = $nextEngine($receiveOrderRow, 'access_token');
+$response->body();
+```
+
+#### 商品ページ
+
+```
+$field = [
+    'goods_page_goods_code',
+    'goods_page_goods_name',
+    'goods_page_display_flag',
+];
+
+$criteria = [
+    [
+        'field' => 'goods_page_goods_code',
+        'operator' => '-eq',
+        'parameter' => 'goods_page_goods_codeを設定',
+    ],
+];
+
+$fields = new MasterGoodsPageFields($field);
+$criteria = new MasterGoodsPageCriteria($criteria);
+$masterGoodsPage = new MasterGoodsPage();
+$masterGoodsPage->fields($fields)->criteria($criteria);
+$response = $nextEngine($masterGoodsPage, 'access_token');
+$response->body();
+```
+
+#### 商品ページ(バリエーション)
+
+```
+$field = [
+    'goods_page_goods_code',
+    'goods_page_v_horizontal_name',
+    'goods_page_v_horizontal_value',
+];
+
+$criteria = [
+    [
+        'field' => 'goods_page_goods_code',
+        'operator' => '-eq',
+        'parameter' => 'goods_page_goods_codeを設定',
+    ],
+];
+
+$fields = new MasterGoodsPageVariationFields($field);
+$criteria = new MasterGoodsPageVariationCriteria($criteria);
+$masterGoodsPageVariation = new MasterGoodsPageVariation();
+$masterGoodsPageVariation->fields($fields)->criteria($criteria);
+$response = $nextEngine($masterGoodsPageVariation, 'access_token');
 $response->body();
 ```
 
