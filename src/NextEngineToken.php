@@ -19,12 +19,13 @@ class NextEngineToken implements TokenProviderInterface
         private ClientInterface $client,
         private string $clientId,
         private string $clientSecret,
+        private string $redirectUri
     ) {
     }
 
     public function redirect(): string
     {
-        return 'https://base.next-engine.org/users/sign_in?client_id=' . $this->clientId;
+        return 'https://base.next-engine.org/users/sign_in?client_id=' . $this->clientId . '&redirect_uri=' . $this->redirectUri;
     }
 
     public function callback(string $uid, string $state): Token
