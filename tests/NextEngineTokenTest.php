@@ -15,6 +15,7 @@ class NextEngineTokenTest extends TestCase
     protected PsrResponseInterface $response;
     protected string $clientId;
     protected string $clientSecret;
+    private string $redirectUri;
 
     protected function setUp(): void
     {
@@ -22,13 +23,14 @@ class NextEngineTokenTest extends TestCase
         $this->response->shouldReceive('getBody')->andReturn($this->expectedAccessTokenResponse());
         $this->clientId = 'client_id';
         $this->clientSecret = 'client_secret';
+        $this->redirectUri = 'redirect_uri';
     }
 
     public function testRedirect(): void
     {
         $client = Mockery::mock(ClientInterface::class);
-        $nextEngineToken = new NextEngineToken($client, $this->clientId, $this->clientSecret);
-        $expected = 'https://base.next-engine.org/users/sign_in?client_id=client_id';
+        $nextEngineToken = new NextEngineToken($client, $this->clientId, $this->clientSecret, $this->redirectUri);
+        $expected = 'https://base.next-engine.org/users/sign_in?client_id=client_id&redirect_uri=redirect_uri';
         $this->assertSame($expected, $nextEngineToken->redirect());
     }
 
@@ -61,7 +63,7 @@ class NextEngineTokenTest extends TestCase
                 return $this->response;
             });
 
-        $nextEngineToken = new NextEngineToken($client, $this->clientId, $this->clientSecret);
+        $nextEngineToken = new NextEngineToken($client, $this->clientId, $this->clientSecret, $this->redirectUri);
         $result = $nextEngineToken->callback($uid, $state);
         $this->assertInstanceOf(Token::class, $result);
         $this->assertSame('access_token_dummy_data', $result->getAccessToken());
