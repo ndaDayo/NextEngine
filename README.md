@@ -24,8 +24,9 @@ use NdaDayo\NextEngine\NextEngineToken;
 $client = new Client();
 $clientId = 'client-id';
 $clientSecret = 'client-secret';
+$redirectUri = 'redirect_uri'
 
-$nextEngineToken = new NextEngineToken($client, $clientId, $clientSecret);
+$nextEngineToken = new NextEngineToken($client, $clientId, $clientSecret, $redirectUri);
 ```
 
 #### 認証画面のURLを取得
@@ -186,6 +187,17 @@ $criteria = new MasterGoodsPageVariationCriteria($criteria);
 $masterGoodsPageVariation = new MasterGoodsPageVariation();
 $masterGoodsPageVariation->fields($fields)->criteria($criteria);
 $response = $nextEngine($masterGoodsPageVariation, 'access_token');
+$response->body();
+```
+
+#### 受注伝票出荷確定処理
+
+```
+$receiveOrderBaseUpdate = new ReceiveOrderBaseShipped();
+$receiveOrderBaseUpdate->receiveOrderId('order_idを設定');
+$receiveOrderBaseUpdate->receiveOrderLastModifiedDate('last_modified_dateを設定');
+
+$response = $nextEngine($receiveOrderBaseUpdate, 'access_token');
 $response->body();
 ```
 
