@@ -190,6 +190,22 @@ $response = $nextEngine($masterGoodsPageVariation, 'access_token');
 $response->body();
 ```
 
+#### 店舗マスタ
+
+```
+$field = [
+    'shop_id',
+    'shop_name',
+];
+
+$fields = new MasterShopFields($field);
+$masterShop = new MasterShop();
+$masterShop->fields($fields);
+
+$response = $nextEngine($masterShop, 'access_token');
+$response->body();
+```
+
 #### 受注伝票出荷確定処理
 
 ```
