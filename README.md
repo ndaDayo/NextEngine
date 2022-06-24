@@ -209,9 +209,31 @@ $response->body();
 #### 受注伝票出荷確定処理
 
 ```
-$receiveOrderBaseUpdate = new ReceiveOrderBaseShipped();
+$receiveOrderBaseShipped = new ReceiveOrderBaseShipped();
+$receiveOrderBaseShipped->receiveOrderId('order_idを設定');
+$receiveOrderBaseShipped->receiveOrderLastModifiedDate('last_modified_dateを設定');
+
+$response = $nextEngine($receiveOrderBaseShipped, 'access_token');
+$response->body();
+```
+
+#### 受注伝票更新
+
+```
+$receiveOrderBaseUpdate = new ReceiveOrderBaseUpdate();
 $receiveOrderBaseUpdate->receiveOrderId('order_idを設定');
 $receiveOrderBaseUpdate->receiveOrderLastModifiedDate('last_modified_dateを設定');
+
+$xmlstr = <<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+<receiveorder_base>
+<receive_order_delivery_cut_form_id>伝票番号</receive_order_delivery_cut_form_id>
+</receiveorder_base>
+</root>
+XML;
+
+$receiveOrderBaseUpdate->data($xmlstr);
 
 $response = $nextEngine($receiveOrderBaseUpdate, 'access_token');
 $response->body();
