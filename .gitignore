@@ -1,0 +1,8 @@
+/vendor
+/vendor-bin/qa/vendor
+.env
+.phpcs-cache
+.phpunit.result.cache
+.scribe
+/docs
+.idea
