@@ -239,6 +239,19 @@ $response = $nextEngine($receiveOrderBaseUpdate, 'access_token');
 $response->body();
 ```
 
+#### セット商品マスタ
+
+```
+$field = ['set_goods_id'];
+
+$fields = new MasterSetGoodsFields($field);
+$masterSetGoods = new MasterSetGoods();
+$masterSetGoods->fields($fields);
+$nextEngine = new NextEngine($client);
+$response = $nextEngine($masterSetGoods, 'access_token');
+$response->body();
+```
+
 ## Test
 
 ```
