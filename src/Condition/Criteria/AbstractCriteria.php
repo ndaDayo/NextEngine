@@ -56,6 +56,7 @@ abstract class AbstractCriteria implements CriteriaInterface
         '-gte',
         '-in',
         '-nin',
+        '-like',
         '-nlike',
         '-nlikeornull',
         '-blank',
